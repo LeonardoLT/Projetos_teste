@@ -1,0 +1,5 @@
+É necessário rodar o json-server para pegar as informações do backend.
+
+- Abrir o terminal;
+- Entrar no diretório onde está o arquivo db.json (pasta meet-app-starter);
+- rodar o comando json-server db.json
