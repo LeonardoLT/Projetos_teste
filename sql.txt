@@ -1,0 +1,89 @@
+CREATE TABLE fact_trips
+(
+id int,
+duration numeric,
+start_date timestamp,
+end_date timestamp,
+start_station_id int,
+end_station_id int,
+bike_id int,
+user_id int,
+PRIMARY KEY (id),
+FOREIGN KEY (start_station_id) REFERENCES dim_station(id),
+FOREIGN KEY (end_station_id) REFERENCES dim_stations(id),
+FOREIGN KEY (bike_id) REFERENCES dim_bike(id),
+FOREIGN KEY (user_id) REFERENCES dim_user(id)
+);
+
+CREATE TABLE dim_stations
+(
+id int,
+station_name string,
+terminal_name string,
+PRIMARY KEY (id)
+);
+
+CREATE TABLE dim_bike
+(
+id int,
+bike_num string,
+PRIMARY KEY (id)
+);
+
+CREATE TABLE dim_user
+(
+id int,
+user_type string,
+zip_code string,
+PRIMARY KEY (id)
+);
+
+CREATE TABLE dim_timezone
+(
+id int,
+timezone string,
+PRIMARY KEY (id)
+);
+
+
+INSERT INTO fact_trips (id, duration, start_date, end_date, start_station_id, end_station_id, bike_id, user_id)
+VALUES ('1', '1648', '8/29/2014 15:33', '8/29/2014 16:00', '1', '2', '1', '1');
+
+INSERT INTO fact_trips (id, duration, start_date, end_date, start_station_id, end_station_id, bike_id, user_id)
+VALUES ('2', '5623', '12/11/2019 15:33', '12/15/2019 16:00', '2', '3', '2', '2');
+
+INSERT INTO fact_trips (id, duration, start_date, end_date, start_station_id, end_station_id, bike_id, user_id)
+VALUES ('3', '9956', '01/05/2020 15:33', '02/13/2020 16:00', '3', '4', '3', '3');
+
+INSERT INTO dim_stations (id, station_name, terminal_name)
+VALUES ('1', 'estação 1', '1001');
+
+INSERT INTO dim_stations (id, station_name, terminal_name)
+VALUES ('2', 'estação 2', '2002');
+
+INSERT INTO dim_stations (id, station_name, terminal_name)
+VALUES ('3', 'estação 3', '3003');
+
+INSERT INTO dim_stations (id, station_name, terminal_name)
+VALUES ('4', 'estação 4', '4004');
+
+INSERT INTO dim_bike (id, bike_num)
+VALUES ('1', '601');
+
+INSERT INTO dim_bike (id, bike_num)
+VALUES ('2', '602');
+
+INSERT INTO dim_bike (id, bike_num)
+VALUES ('3', '603');
+
+INSERT INTO dim_user (id, user_type, zip_code)
+VALUES ('1', 'type 1', '1234567');
+
+INSERT INTO dim_user (id, user_type, zip_code)
+VALUES ('2', 'type 2', '2345678');
+
+INSERT INTO dim_user (id, user_type, zip_code)
+VALUES ('3', 'type 3', '3456789');
+
+
+Server=localhost\SQLEXPRESS;Database=master;Trusted_Connection=True;

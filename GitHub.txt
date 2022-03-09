@@ -1,0 +1,21 @@
+Criar repositório:
+ - new repository > dar nome ao repositório > colocar se é público ou privado > adicionar um read me se quiser
+
+Clonar o repositorio para o coputador:
+ - code > aba https > copiar o link > ir na pasta no seu computador e abrir o gitBash > comando git clone <link>
+
+Verificar se o servidor e seu pc estão sincronizados:
+ - git status
+
+Adicionar arquivos para commitar:
+ - git add .
+
+Commitar:
+ - git commit -m "texto de descrição entre aspas"
+
+Enviar para o repositório:
+ - git push origin main
+
+
+AVISO: SEMPRE CLONAR O NOVO REPOSITÓRIO PARA GUARDAR DIFERENTES PROJETOS.
+NÃO GUARDAR TODOS OS PROJETOS NO MESMO LUGAR POR UMA QUESTÃO DE ORGANIZAÇÃO
