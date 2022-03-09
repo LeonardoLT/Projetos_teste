@@ -1,0 +1,37 @@
+Rodar programa: ng serve
+
+Criar componentes: ng g c nome_do_componente (adicionar --spec=false se não quiser arquivos de teste gerados)
+
+localhost:4200 é onde as aplicações angular rodam no navegador
+
+<router-outlet> é a tag que indica que as telas serão exibidas de forma dinâmica ao trocar de rota
+
+As rotas são definidas geralmente no arquivo app.router.ts da seguinte forma:
+export const ROUTES: Routes = [
+    {path: '', component: NomeComponent}
+]
+E logo após isso importar no arquivo app.module.ts da seguinte forma: RouterModule.forRoot(ROUTES)
+
+[routerLink]="['/nome_do_path']" para direcionar para a rota desejada
+routerLinkActive="nome_para_css" para indicar que um elemento está ativo de acordo com a rota e aplicar o nome css neste caso
+
+---------------------------------------------------------------------------------------------------------
+Instruções básicas:
+Os componentes são declarados nos modulos
+@Input() passa valores para os componentes no arquivo .ts
+@Output() nome_evento = new EventEmitter emite eventos
+Colocar uma ? no método, condição, parâmetro ou variável torna ele opcional
+*ngIf="true/false" é o equivalente ao if comum
+*ngFor="let nome_elemento of nome_coleção" é o equivalente ao for comum
+*ngSwitch="nome_variavel" *ngSwitchCase="nome_conteudo" *ngSwitchDefault="saida_padrao" é o equivalente ao SwitchCase comum
+Colocar ${texto} dentro de um texto entre aspas, faz reconhecer o que está entre chaves como uma variável
+(click) serve para fazer algo ao clicar
+Você pode colocar uma referência nas suas tags para direcionar algum evento a elas. Ex: <div #nome_referencia> ... </div>
+
+
+Funções:
+ngOnInit() executa o código pelo menos uma vez na inicialização
+
+
+Propriedades:
+[hidden]=true/false esconde a div. É escondido via css, então melhor não usar
