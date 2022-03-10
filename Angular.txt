@@ -1,3 +1,6 @@
+Criar um projeto angular: ng new nome_projeto --prefix=escolha_um_prefixo
+O --prefix é opcional. Ele determina que, ao criar um novo componente, o nome dele sempre tera o prefixo escolhido
+
 Rodar programa: ng serve
 
 Criar componentes: ng g c nome_do_componente (adicionar --spec=false se não quiser arquivos de teste gerados)
@@ -15,6 +18,31 @@ E logo após isso importar no arquivo app.module.ts da seguinte forma: RouterMod
 [routerLink]="['/nome_do_path']" para direcionar para a rota desejada
 routerLinkActive="nome_para_css" para indicar que um elemento está ativo de acordo com a rota e aplicar o nome css neste caso
 
+Para ler as variáveis nos arquivos html, colocá-las entre duas chaves {{nome_variável}}
+
+Uso de rotas parametrizadas quando parte da rota vai identificar um objeto que está no backend
+Identificada quando ao final do path da rita tiver um /:id
+Chamar essas rotas pode ser feita com um snapshot (algo mais estático) ou subscribe (mudando a rota em tempo real)
+snapshot não vai dar o valor atualizado caso precise, já o subscribe abre um canal para ouvir mudanças de valores nos parâmetros.
+O snapshot pode ser mais conveniente quando não precisar de valores atualizados
+snapshot: this.route.snapshot.params['id']
+subscribe this.route.subscribet.params['id']
+
+Em app.route as rotas ficarão assim:
+{path: 'nome_rota', component: NomeComponent},
+    {path: 'nome_rota/:id', component: NomeRotaFiflhaComponent,
+        children: [
+            {path: '', redirectTo: 'menu', pathMatch: 'full'},
+            {path: 'nome_subRota1', component: NomeSubRota1Component},
+            {path: 'nome_subRota2', component: NomeSubRota2Component}
+        ]},
+
+O nome_rota nos dois primeiros path é igual para indicar que uma rota está dentro da outra mas mostrando um elemento diferente com o id
+O nome_rota/:id seria como vc acessar uma janela que faz parte de outra, por exemplo, numa tela que lista restaurantes vc clica
+	em um restaurante para abrir uma tela de descrição.
+A subRota é para indicar que dentro da rota filha tambem tem mudanças de rota, como por exemplo, um submenu que troca o conteúdp
+	por abas
+
 ---------------------------------------------------------------------------------------------------------
 Instruções básicas:
 Os componentes são declarados nos modulos
@@ -28,10 +56,95 @@ Colocar ${texto} dentro de um texto entre aspas, faz reconhecer o que está entr
 (click) serve para fazer algo ao clicar
 Você pode colocar uma referência nas suas tags para direcionar algum evento a elas. Ex: <div #nome_referencia> ... </div>
 
+-------------------------------------------------------------------------------------------------------------
 
 Funções:
 ngOnInit() executa o código pelo menos uma vez na inicialização
 
+---------------------------------------------------------------------------------------------------------------
+
 
 Propriedades:
 [hidden]=true/false esconde a div. É escondido via css, então melhor não usar
+
+-----------------------------------------------------------------------------------------------------------
+
+Observables:
+map tranforma os itens
+filter filtra os itens
+subscribe é similar ao forEach em que cada item do array será passado para o argumento do método subscribe
+
+------------------------------------------------------------------------------------------------------------
+Conexão com o banco
+Um arquivo api.ts pode ser criado e dentro dele exportar uma constante com o localhost do banco
+ex: export const NOME_API = 'http://localhost:numero_porta'
+Esse artquivo é importado pelo arquivo nome_service.ts
+
+Para uma classe de serviço receber um outro servuiço, é necessário a marcação @Injectable()
+
+O http é declarado no contrutor do arquivo service.ts. ex: constructor(private http: Http)
+
+Em alguma função que retorna um observable com o array do tipo de dado que o banco te dá
+EX: nome_funcao() Observable<tipo_dado[]>
+Usar get para pegar as informações
+Ex: return this.http.get(`${NOME_API}/nome_rota_criada_pelo_banco`)
+Lembre-se: o sinal de crase (não são aspas simples) é para concatenar tudo que está dentro
+	   O sinal de $ é para reconhecer o que está entre chaves como uma variável
+É necessário usar map para transformar a resposta do observable (dados do tipo response) no array de dados desejados
+Ex: return this.http.get(`${NOME_API}/nome_rota_criada_pelo_banco`).map(response => response.json())
+Lembre-se: a extensão .json é porque usei o json-server como banco de dados. Ficar atento à extensão correta
+
+A requisição não é feita até ser feito um subscribe no componente.ts
+Ex:
+ngOnInit(){
+	this.nome_servico.nome_funcao()
+	 .subscribe(nome_variavel => this.nome_variavel = nome_variavel_de_retorno_da_funcao)
+}
+Lembre-se: o nome_servico é o servico que está fazendo a chamada http
+	   o nome_funcao é a funcao que está dando return no http.get
+	   o nome_variavel_de_retorno_da_funcao é cada elemento do array que retorna da funcao
+	   o => é uma arrow function. O que vem antes da seta (=>) são os argumentos. O que vem depois é a implementação. 
+	   Neste caso, temos um argumento e a implementação da função é atribuir o valor do argumento ao atributo do componente.
+	   A sintaxe está mais enxuta, mas seria como se escrevêssemos:
+		.subscribe (function(nome_variavel){
+   		this.nome_variavel = nome_variavel_de_retorno_da_funcao
+		})
+
+-------------------------------------------------------------------------------------------------
+Tratar erros
+
+Tratar com catch e errorHandler
+
+Como errorHandler é um erro global, criou-se o arquivo app.error-handler.ts e nele o método static handleError(error: Response | any)
+Lembre-se: Response é um objeto da API do angular que representa a resposta. E any é pra mostrar que o erro aceita o tipo Response
+	   ou qualquer um
+
+Ex: 
+
+export class ErrorHandler{
+    static handleError(error: Response | any){
+        let errorMessage: string
+
+        if(error instanceof Response){
+            errorMessage = `Erro ${error.status} ao acessar a URL ${error.url} - ${error.statusText}`
+        }else{
+            errorMessage = error.toString()
+        }
+        console.log(errorMessage)
+
+        return Observable.throw(errorMessage)
+        
+    }
+}
+errorMessage é uma variavel criada para guardar a mensagem de erro. Pode ter qualquer nome
+instanceof é um operador que permite testar se um objeto é uma instância de um tipo específico de uma class, subclass ou interface
+	   Se for, retorna true, se não false
+error.status é o número do erro e error.statusText é a descrição do erro
+Throw é o que vai jogar o erro para o observable
+
+De volta ao componente.ts colocar .catch ao final do observable para pegar o erro caso ocorra
+ex: this.nome_servico.nome_funcao()
+	 .subscribe(nome_variavel => this.nome_variavel = nome_variavel_de_retorno_da_funcao)
+	 .catch(ErrorHandler.handleError)
+Lembre-se: ErrorHandler é o nome do arquivo app.error-handler.ts que foi criado
+	   handleError é o nome da função que foi criada
