@@ -40,8 +40,21 @@ Em app.route as rotas ficarão assim:
 O nome_rota nos dois primeiros path é igual para indicar que uma rota está dentro da outra mas mostrando um elemento diferente com o id
 O nome_rota/:id seria como vc acessar uma janela que faz parte de outra, por exemplo, numa tela que lista restaurantes vc clica
 	em um restaurante para abrir uma tela de descrição.
-A subRota é para indicar que dentro da rota filha tambem tem mudanças de rota, como por exemplo, um submenu que troca o conteúdp
+A subRota é para indicar que dentro da rota filha tambem tem mudanças de rota, como por exemplo, um submenu que troca o conteúdo
 	por abas
+
+
+Pipes servem para transformar o conteúdo. Ex: {{user.name | uppercase}} faz com que a saída seja toda em maiúscula
+alguns nomes de pipes:
+uppercase - transforma em maiúscula
+lowercase - transforma em minúscula
+percent - transforma em porcentagem
+date - formato data (date: 'dd/MM/yyyy')
+currency - formato monetário (currency: 'BRL': true)
+slice - limita arrays e strings ({{user.name | slice: 0:4}} a saída será apenas os 4 primeiros caracteres)
+async - faz o subscribe direto no item
+
+Pipes podem ser combinados com outros pipes
 
 ---------------------------------------------------------------------------------------------------------
 Instruções básicas:
