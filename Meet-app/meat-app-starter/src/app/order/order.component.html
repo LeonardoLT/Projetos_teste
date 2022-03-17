@@ -27,12 +27,12 @@
                 <input class="form-control" name="address" ngModel required minlength="5" placeholder="Endereço" autocomplete="off">
               </mt-input-container>
             </div>
-            <div class="col-sm-2 col-xs-6">
-                <mt-input-container errorMessage="Número obrigatório" label="Número" >
-                    <input class="form-control" name="number" required ngModel placeholder="Número" autocomplete="off">
+            <div class="col-sm-3 col-xs-6">
+                <mt-input-container errorMessage="Obrigatório e somente números" label="Número" >
+                    <input class="form-control" name="number" pattern="^[0-9]*$" required ngModel placeholder="Número" autocomplete="off">
                   </mt-input-container>
             </div>
-            <div class="col-sm-4 col-xs-6">
+            <div class="col-sm-3 col-xs-6">
                 <mt-input-container >
                     <input type="text" class="form-control" name="optional" ngModel placeholder="Complemento">
                   </mt-input-container>
@@ -60,20 +60,21 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
+                <tr *ngFor="let item of orderItems">
                   <td class="text-center">
                     <a class="btn btn-sm"><i class="fa fa-minus"></i></a>
-                    1
+                    {{quantity}}
                     <a class="btn btn-sm"><i class="fa fa-plus"></i></a>
                   </td>
-                  <td>Cup Cake</td>
+                  <td>{{item.menuItem.name}}</td>
 
-                  <td>Recheado com doce de leite</td>
-                  <td class="text-right">R$ 10,00</td>
+                  <td>{{item.menuItem.description}}</td>
+                  <td class="text-right">{{quantity * item.menuItem.price | currency: 'BRL': true}}</td>
                   <td class="text-right">
                     <a class="btn btn-sm danger"><i class="fa fa-remove"></i></a>
                   </td>
                 </tr>
+                <!--
                 <tr>
                   <td class="text-center">
                     <a class="btn btn-sm"><i class="fa fa-minus"></i></a>
@@ -88,6 +89,7 @@
                     <a class="btn btn-sm danger "><i class="fa fa-remove"></i></a>
                   </td>
                 </tr>
+                -->
 
                 </tbody>
               </table>

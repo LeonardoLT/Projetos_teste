@@ -4,8 +4,8 @@
 
   <ng-content></ng-content>
 
-  <span class="help-block" *ngIf="input.valid && (input.dirty || input.touched)"><i
+  <span class="help-block" *ngIf="hasSuccess()"><i
       class="fa fa-check"></i> Ok</span>
-  <span class="help-block" *ngIf="!input.valid && (input.dirty || input.touched)"><i
+  <span class="help-block" *ngIf="hasError()"><i
       class="fa fa-check"></i> {{errorMessage}}</span>
 </div>
