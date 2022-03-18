@@ -244,3 +244,5 @@ do componente mudar. Isso é necessário para notificar o formulário do novo va
 Após isso, lembre-se que o componente no formulário deve ter um name e o ngModel
 
 Outra forma de fazer essa integração de componentes no form é com o ng-content
+
+O valor de retorno de um formulário pode ser conferido com form.value
