@@ -11,6 +11,10 @@ export class OrderService{
         return this.shoppingCartService.items;
     }
 
+    totalValue(): number{
+        return this.shoppingCartService.total();
+    }
+
     increaseQty(item: CartItem){
         this.shoppingCartService.increaseQty(item);
     }

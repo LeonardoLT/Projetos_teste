@@ -17,8 +17,14 @@ export class OrderComponent implements OnInit {
     {label: 'Vale Refeição', value: 'REF'}
   ];
 
+  delivery: number = 8;
+
   ngOnInit() {
     
+  }
+
+  itemsValue(){
+    return this.orderService.totalValue();
   }
 
   cartItems(): CartItem[]{
