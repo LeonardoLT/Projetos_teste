@@ -31,6 +31,8 @@ Colocar ${texto} dentro de um texto entre aspas, faz reconhecer o que está entr
 
 (click) serve para fazer algo ao clicar
 
+(mouseenter) e (mouseleave) serve para chamar uma função quando o mouse entra ou sai do objeto
+
 Você pode colocar uma referência nas suas tags para direcionar algum evento a elas. Ex: <div #nome_referencia> ... </div>
 
 <router-outlet> é a tag que indica que as telas serão exibidas de forma dinâmica ao trocar de rota
@@ -46,6 +48,8 @@ E logo após isso importar no arquivo app.module.ts da seguinte forma: RouterMod
 
 [routerLink]="['/nome_do_path']" para direcionar para a rota desejada
 routerLinkActive="nome_para_css" para indicar que um elemento está ativo de acordo com a rota e aplicar o nome css neste caso
+
+Você pode usar o router.navigate no arquivo .ts para mudar de rota em funções
 
 Para ler as variáveis nos arquivos html, colocá-las entre duas chaves {{nome_variável}}
 
