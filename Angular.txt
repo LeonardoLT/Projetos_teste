@@ -7,7 +7,36 @@ Criar componentes: ng g c nome_do_componente (adicionar --spec=false se não qui
 
 localhost:4200 é onde as aplicações angular rodam no navegador
 
+---------------------------------------------------------------------------------------------------------
+Instruções básicas:
+Os componentes são declarados nos modulos
+
+@Input() passa valores para os componentes no arquivo .ts
+
+@Output() nome_evento = new EventEmitter emite eventos
+
+ngOnInit() serve para executar algo assim que o componente é iniciado
+
+ngAfterContentInit() serve para executar algo logo após todo o conteúdo do componente for iniciado
+
+Colocar uma ? no método, condição, parâmetro ou variável torna ele opcional
+
+*ngIf="true/false" é o equivalente ao if comum
+
+*ngFor="let nome_elemento of nome_coleção" é o equivalente ao for comum
+
+*ngSwitch="nome_variavel" *ngSwitchCase="nome_conteudo" *ngSwitchDefault="saida_padrao" é o equivalente ao SwitchCase comum
+
+Colocar ${texto} dentro de um texto entre aspas, faz reconhecer o que está entre chaves como uma variável
+
+(click) serve para fazer algo ao clicar
+
+Você pode colocar uma referência nas suas tags para direcionar algum evento a elas. Ex: <div #nome_referencia> ... </div>
+
 <router-outlet> é a tag que indica que as telas serão exibidas de forma dinâmica ao trocar de rota
+
+<ng-content> permite passar qualquer conteúdo entre as tags de abertura e fechamento do componente criado
+@ContentChild no arquivo .ts serve para se comunicar com o conteúdo do ng-content
 
 As rotas são definidas geralmente no arquivo app.router.ts da seguinte forma:
 export const ROUTES: Routes = [
@@ -56,19 +85,7 @@ async - faz o subscribe direto no item
 
 Pipes podem ser combinados com outros pipes
 
----------------------------------------------------------------------------------------------------------
-Instruções básicas:
-Os componentes são declarados nos modulos
-@Input() passa valores para os componentes no arquivo .ts
-@Output() nome_evento = new EventEmitter emite eventos
-Colocar uma ? no método, condição, parâmetro ou variável torna ele opcional
-*ngIf="true/false" é o equivalente ao if comum
-*ngFor="let nome_elemento of nome_coleção" é o equivalente ao for comum
-*ngSwitch="nome_variavel" *ngSwitchCase="nome_conteudo" *ngSwitchDefault="saida_padrao" é o equivalente ao SwitchCase comum
-Colocar ${texto} dentro de um texto entre aspas, faz reconhecer o que está entre chaves como uma variável
-(click) serve para fazer algo ao clicar
-Você pode colocar uma referência nas suas tags para direcionar algum evento a elas. Ex: <div #nome_referencia> ... </div>
-
+[class.atributo_classe]="condição" para definir no html o atributo da tag para ser mexina no css
 -------------------------------------------------------------------------------------------------------------
 
 Funções:
@@ -161,3 +178,69 @@ ex: this.nome_servico.nome_funcao()
 	 .catch(ErrorHandler.handleError)
 Lembre-se: ErrorHandler é o nome do arquivo app.error-handler.ts que foi criado
 	   handleError é o nome da função que foi criada
+
+------------------------------------------------------------------------------------------------------------------
+Formulários
+Se faz com a tag <form>. Todo form é um ngForm
+
+Todo form deve ter o atributo name e a diretiva ngModel
+ex: <input type="text" name="nome" ngModel>
+
+Para inserir o valor no ngModel é só colocaá-lo entre colchetes como as outras diretivas. Quando o valor do
+componente mudar, o campo é atualizado mas o inverso não acontece
+ex: username: string= = "nome do usuário"
+    <input type="text" name="nome" [ngModel]="username">
+
+Para o inverso também acontecer devemos usar o two-way binding, colocando o ngModel entre colchetes e parenteses
+ex: username: string= = "nome do usuário"
+    <input type="text" name="nome" [(ngModel)]="username">
+
+Também é possivel obter referências no form
+ex: <form #myForm="ngForm">
+    <input type="text" name="nome" ngModel />
+    <button [disabled]="myForm.invalid" />
+
+Para desabilitar a validação padrão, basta colocar a diretiva novalidate
+ex: <form #form="ngForm" novalidate>
+
+Os formularios têm os seguintes estados para ajudar a dar feedback visual ao usuário: valid ou invalid, pristine ou dirty
+e touched ou untouched
+
+Para saber os estados é necessario uma referência para a diretiva ngModel do campo
+ex: <form>
+	<input name="nome" [(ngModel)]="username" #ipt="ngModel">
+	<span *ngIf="ipt.invalid"> Nome inválido </span>
+    </form>
+
+As validações que podemos atribuir a um campo são: required, pattern, minlenght e maxlenght
+
+[disabled]="!form.valid" em um botão para desabilitá-lo caso o formulário não seja válido
+
+Para fazer com que outros componentes contem como fazendo parte do form, tipo um botão de radio, é necessário usar o
+ControlValueAccessor e colocar os providers no arquivo .ts
+ex: @Component({
+  selector: 'mt-radio',
+  templateUrl: './radio.component.html',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => RadioComponent),
+      multi: true
+    }
+  ]
+})
+export class RadioComponent implements OnInit, ControlValueAccessor {
+
+De forma simplificada é a maneira como registramos o componente no framework. Usamos esse token (NG_VALUE_ACCESSOR)
+para registrar o componente que acabamos de criar. O Angular vai usar os valores desse token para passar as referências
+para a API de forms. 
+Usamos "forwardRef" porque no momento que esse provider for obtido, o componente ainda não está registrado, então
+basicamente declaramos uma referência de que ele vai estar disponível posteriormente.
+
+Lembre-se de implementar as funções da interface do ControlValueAccessor: writeValue, registerOnChange e registerOnTouched
+No método "registerOnChange", é recebida uma referência a uma função que deve ser chamada sempre que o valor interno
+do componente mudar. Isso é necessário para notificar o formulário do novo valor
+
+Após isso, lembre-se que o componente no formulário deve ter um name e o ngModel
+
+Outra forma de fazer essa integração de componentes no form é com o ng-content
