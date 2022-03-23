@@ -184,7 +184,55 @@ Lembre-se: ErrorHandler é o nome do arquivo app.error-handler.ts que foi criado
 	   handleError é o nome da função que foi criada
 
 ------------------------------------------------------------------------------------------------------------------
-Formulários
+Formulários (new)
+
+Reactive forms é a mais nova forma de criar formulários no angular
+
+Se usa com um formgroup e um formbuilder no arquivo .ts
+ex: userform: FormGroup
+    contructor(private fb: FormBuilder){}
+    ngOnInit(){
+	this.userform = this.fb.group({
+	    username: '',
+	    password: '',
+	})
+    }
+
+Os resultados dos campos também podem ser obtidos com o metodo control
+ex: username: this.fb.control(''),
+    password: this.fb.control('')
+
+Validadores também podem ser passados pelo control
+ex: username: this.fb.control('', [Validators.required]),
+    password: this.fb.control('', [Validatiors.minlength(3)])
+
+Você também pode agrupar os campos para fazer a validação entre os componentes agrupados
+ex: this.userform = this.fb.group({
+	    username: '',
+	    password: '',
+	    address: this.fb.group({
+		street: '',
+		zip: ''
+	    })
+	})
+
+O template não possui mais o ngmodel. Agora usamos formGroup para indicar o grupo e formControlName para indicar
+o nome dos campos. Se você tiver um grupo, pode associá-la com formGroupName
+ex: <form [formGroup]="userform">
+	<input type="text" formControlName="username" />
+	<input type="password" formControlName="password" />
+
+	<div formGroupName="address">
+	    <input type="text" formControlName="street" />
+	    <input type="text" formControlName="zip" />
+	</div>
+
+    </form>
+
+Não se esqueça de importar o ReactiveFormsModule no app.module ou no console do browser vai acusar não ter provider
+------------------------------------------------------------------------------------------------------------------
+Formulários (old)
+
 Se faz com a tag <form>. Todo form é um ngForm
 
 Todo form deve ter o atributo name e a diretiva ngModel
