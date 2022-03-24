@@ -298,3 +298,62 @@ Após isso, lembre-se que o componente no formulário deve ter um name e o ngMod
 Outra forma de fazer essa integração de componentes no form é com o ng-content
 
 O valor de retorno de um formulário pode ser conferido com form.value
+
+-----------------------------------------------------------------------------------------------------------------
+Modulos
+
+É interessante declarar seus componentes em modulos diferentes e não apenas todos no app.module para evitar lentidão
+
+O que fazer:
+- Retirar a declaração do modulo do app.module
+- Mudar a rota no arquivo app.routes.ts do componente e passar para loadchilden: {path: 'nome_rota', loadChildren: './caminho_do_componente#NomeModuloModule'}
+- No Angular 9 se faz assim: { path: 'nome_rota', loadChildren: () => import('./caminho_do_modulo').then(m => m.NomeModuloModule) }
+- Criar um arquivo .module.ts na pasta do componente que você deseja ter o modulo separado
+- Fazer as declarações de componentes e as rotas nesse module.ts:
+const ROUTES: Routes = [
+    {path: '', component: NomeComponenteComponent}
+]
+
+@NgModule({
+    declarations:[NomeComponenteComponent],
+    imports:[RouterModule.forChild(ROUTES)]
+})
+export class NomeModuloModule{}
+
+- Se você tiver várias declarações nos modulos você pode usar um export logo abaixo do import para exportar os
+comonentes declarados e os modulos importados. Dessa forma você não precisa importar ou declarar nenhum deles no app.module
+
+-Se o modulo não tiver navegação, ou seja, se não forem componentes de páginas mas sim de funcionaolidades (formulários, por exemplo),
+você não precisa da rota
+
+-Se o modulo tem rota ele NÃO é declarado no app.module. Ele é carregado automaticamente apenas ao acessar a rota
+
+-CommomModule é um modulo nativo para usar diretivas como o ngIf e ngFor. Não aparece no app.module mas é necessario
+importá-lo caso você crie um modulo novo
+
+-Mexer em rotas e modulos pode dar um erro na hora da execução. É sempre bom derrubar a aplicação e subir de novo
+
+-É bom ter um CoreModule para reunir os serviços da aplicação. Ele é importado no app.module
+@NgModule({
+    providers:[NomeServicoService}
+})
+export class CoreModule {}
+
+-Você também pode ter providers em outros modulos e fazer com que eles sejam carregados apenas quando necessários
+mesmo que o modulo tenha sido chamado, usando o ModuleWithProviders ao criar uma função no export do seu modulo
+export class NomeModuloModule{
+    static forRoot(): ModuleWithProviders{
+        return {
+            ngModule: NomeModuloModule,
+            providers: [NomeServicoService]
+        }
+    }
+}
+- E no app.module chamar a função no import
+ imports: [
+    NomeModuloModule.forRoot()
+]
+
+- Em casos onde existem muitos modulos sendo carregados em lazyloading e causando lentidão, você pode usar o preloading
+que vai pré carregar os modulos em background
+- Vá até o app.module e dentro do import do RouterModule, faça isso: RouterModule.forRoot{ROUTES, {preloadingStrategy: PreloadingAllModules}}
