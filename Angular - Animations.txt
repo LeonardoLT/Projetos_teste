@@ -1,0 +1,6 @@
+- É necessário imortar o módulo de animações: npm instal --save @angular/animations@4.0.0
+- O 4.0.0 no final é a versão. Você pode escolher
+- É necessário instalar o polyfills: npm instal --save web-animations.js
+- Adicionar no arquivo polyfills.ts: import 'web-animations-js/web-animations.min.js'
+- Importar no seu app.module o modulo BrowserAnimationsModule. Também é necessário declarar o import porque ele não reconhece e
+não adiciona automaticamente: import { BrowserAnimationsModule } from '@angular/platform-browser/animations';

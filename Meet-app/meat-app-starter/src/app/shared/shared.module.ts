@@ -7,11 +7,13 @@ import { RestaurantsService } from "app/restaurants/restaurants.service";
 import { InputComponent } from "./input/input.component";
 import { RadioComponent } from "./radio/radio.component";
 import { RatingComponent } from "./rating/rating.component";
+import { SnackbarComponent } from './messages/snackbar/snackbar.component';
 
 @NgModule({
-    declarations:[InputComponent, RadioComponent, RatingComponent],
+    declarations:[InputComponent, RadioComponent, RatingComponent, SnackbarComponent],
     imports:[CommonModule, FormsModule, ReactiveFormsModule],
-    exports:[InputComponent, RadioComponent, RatingComponent, CommonModule, FormsModule, ReactiveFormsModule]
+    exports:[InputComponent, RadioComponent, RatingComponent,
+            CommonModule, FormsModule, ReactiveFormsModule, SnackbarComponent]
 })
 export class SharedModule{
     static forRoot(): ModuleWithProviders{
