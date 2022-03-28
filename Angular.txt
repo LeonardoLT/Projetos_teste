@@ -80,6 +80,11 @@ O nome_rota/:id seria como vc acessar uma janela que faz parte de outra, por exe
 A subRota é para indicar que dentro da rota filha tambem tem mudanças de rota, como por exemplo, um submenu que troca o conteúdo
 	por abas
 
+Para evitar erro 404 no servidor quando rodar o projeto em prod, utilizar o esquema de rotas em hash que sempre vai fazer o servidor
+retornar ao index e devolver a página selecionada. Para isso, vá ao app.module e em privides coloque o LocationStrategy e o
+useClass: HashLocationStrategy como mostrado abaixo:
+providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, {provide: LOCALE_ID, useValue: 'pt-BR'}],
+
 
 Pipes servem para transformar o conteúdo. Ex: {{user.name | uppercase}} faz com que a saída seja toda em maiúscula
 alguns nomes de pipes:
@@ -366,7 +371,10 @@ que vai pré carregar os modulos em background
 Buildando o projeto
 
 -ng build
-
 - Para buildar sem os arquivos de dev e já de acordo com prod, usar ng build --prod
-
 - As configurações sobre dev e prod estão no arquivo angular-ci.json na parte de environments
+- O ng build gera a pasta dist na sua aplicação
+
+- Para testar o projeto em produção você pode subir um servidor http para teste. Para isso entre na pasta dist aravés do
+prompt de comando e use o comando python -m http.server
+- Ou então instalar com "npm install -g httpserver" e iniciar com httpserver 80 localhost
