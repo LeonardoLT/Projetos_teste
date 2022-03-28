@@ -4,3 +4,29 @@
 - Adicionar no arquivo polyfills.ts: import 'web-animations-js/web-animations.min.js'
 - Importar no seu app.module o modulo BrowserAnimationsModule. Também é necessário declarar o import porque ele não reconhece e
 não adiciona automaticamente: import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+- As anomaçõs ficam no arquivo.ts
+ex: animations: [
+    trigger('restaurantAppeared', [
+      state('ready', style({opacity: 1})),
+      transition('void => ready', [
+        style({opacity: 0, transform: 'translate(-30px, -10px)'}),
+        animate('500ms 0s ease-in-out')
+      ])
+    ])
+  ]
+
+- Abaixo do export deve haver uma variável para indicar um state
+ex: restaurantState = 'ready';
+
+- No arquivo.html você deve referenciar a tag que vai receber a animação com o nome do trigger recebendo a variável de estado
+ex: [@restaurantAppeared]="restaurantState"
+
+
+- Keyframes são os pontos que guardam os estados da animação e são usados quando uma animação muda
+ex: transition('void => ready', animate('300ms 0s ease-in', keyframes([
+        style({opacity: 0, transform: 'translateX(-30px)', offset:0}),
+        style({opacity: 0.8, transform: 'translateX(10px)', offset:0.8}),
+        style({opacity: 1, transform: 'translateX(0px)', offset:1})
+
+- Offset é a ordem da animação que varia de 0 a 1. Offset 0 é a primeira animação da sequencia; Offset 1 é a última
