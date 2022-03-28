@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { animate, state, style, transition, trigger } from '@angular/core/src/animation/dsl';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'mt-snackbar',
   templateUrl: './snackbar.component.html',
-  styleUrls: ['./snackbar.component.css']/*,
+  styleUrls: ['./snackbar.component.css'],
   animations:[
     trigger('snack-visibility', [
       state ('hidden', style({
@@ -18,7 +18,7 @@ import { animate, state, style, transition, trigger } from '@angular/core/src/an
       transition('hidden => visible', animate('500ms 0s ease-in')),
       transition('visible => hidden', animate('500ms 0s ease-out'))
     ]),
-  ]*/
+  ]
 })
 export class SnackbarComponent implements OnInit {
 
@@ -29,5 +29,9 @@ export class SnackbarComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  /*toggleSnack(){
+    this.snackVisibility = this.snackVisibility === 'hidden' ? 'visible' : 'hidden';
+  }*/
 
 }
