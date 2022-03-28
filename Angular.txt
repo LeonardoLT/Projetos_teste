@@ -361,3 +361,12 @@ export class NomeModuloModule{
 - Em casos onde existem muitos modulos sendo carregados em lazyloading e causando lentidão, você pode usar o preloading
 que vai pré carregar os modulos em background
 - Vá até o app.module e dentro do import do RouterModule, faça isso: RouterModule.forRoot{ROUTES, {preloadingStrategy: PreloadingAllModules}}
+
+------------------------------------------------------------------------------------------------------------
+Buildando o projeto
+
+-ng build
+
+- Para buildar sem os arquivos de dev e já de acordo com prod, usar ng build --prod
+
+- As configurações sobre dev e prod estão no arquivo angular-ci.json na parte de environments
