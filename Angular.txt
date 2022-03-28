@@ -49,6 +49,10 @@ E logo após isso importar no arquivo app.module.ts da seguinte forma: RouterMod
 [routerLink]="['/nome_do_path']" para direcionar para a rota desejada
 routerLinkActive="nome_para_css" para indicar que um elemento está ativo de acordo com a rota e aplicar o nome css neste caso
 
+Para fazer uma rota coringa (wildcard) que serve caso o usuário coloque uma rota que não existe, usa-se ** no path com o
+componente paa onde o usuário será levado
+ex: {path: '**', component: NomeComponent}
+
 Você pode usar o router.navigate no arquivo .ts para mudar de rota em funções
 
 Para ler as variáveis nos arquivos html, colocá-las entre duas chaves {{nome_variável}}
