@@ -153,6 +153,8 @@ Lembre-se: o nome_servico é o servico que está fazendo a chamada http
    		this.nome_variavel = nome_variavel_de_retorno_da_funcao
 		})
 
+A partir do angular 4.3, usa-se o httpCliente e não é mais necessário o .map para retornar o json. Ficando assim:
+return this.http.get<tipo_dado>(`${NOME_API}/nome_rota_criada_pelo_banco`)
 -------------------------------------------------------------------------------------------------
 Tratar erros
 
