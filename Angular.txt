@@ -380,3 +380,8 @@ Buildando o projeto
 - Para testar o projeto em produção você pode subir um servidor http para teste. Para isso entre na pasta dist aravés do
 prompt de comando e use o comando python -m http.server
 - Ou então instalar com "npm install -g httpserver" e iniciar com httpserver 80 localhost
+
+----------------------------------------------------------------
+Subir o server com o nodemon:
+- no terminal digitar nodemon --watch backend backend/dist/server.ts
+- em outro terminal, entrar na pasta backend e digitar tsc -w
