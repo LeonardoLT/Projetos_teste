@@ -385,3 +385,13 @@ prompt de comando e use o comando python -m http.server
 Subir o server com o nodemon:
 - no terminal digitar nodemon --watch backend backend/dist/server.ts
 - em outro terminal, entrar na pasta backend e digitar tsc -w
+
+--------------------------------------------------------------------
+token jwt:
+- A estrutura de um token é: sub, que indentifica quem é o portador do token. iss, que indica quem está emitindo o token
+
+- O token será:
+const token = jwt.sign({sub: dbUser.email, iss: 'meat-api'}, 'seu_password')
+        resp.json({name: dbUser.name, email: dbUser.email, accessToken: token})
+
+Você pode ir no site jwt.io para verificar o conteúdo do token gerado
