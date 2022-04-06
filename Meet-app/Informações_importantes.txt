@@ -3,3 +3,7 @@
 - Abrir o terminal;
 - Entrar no diretório onde está o arquivo db.json (pasta meet-app-starter);
 - rodar o comando json-server db.json
+
+
+Atualizando:
+Para rodar o backend do projeto digite no terminal: nodemon --watch backend backend/dist/server.ts
