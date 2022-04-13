@@ -6,4 +6,5 @@
 
 
 Atualizando:
-Para rodar o backend do projeto digite no terminal: nodemon --watch backend backend/dist/server.ts
+Para rodar o backend do projeto digite no terminal: nodemon --watch backend backend/dist/server.js
+Caso a avba de restaurantes dê erro de httpResponse, abra a página localhost:3001 e autorize o acesso

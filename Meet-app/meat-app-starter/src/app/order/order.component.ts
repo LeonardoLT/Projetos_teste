@@ -15,6 +15,8 @@ export class OrderComponent implements OnInit {
   orderForm: FormGroup;
   emailPattern = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
   numberPattern = /^[0-9]*$/;
+  delivery: number = 8;
+  orderId: string
 
   constructor(private orderService: OrderService, private router: Router, private formbuilder: FormBuilder) { }
 
@@ -23,8 +25,6 @@ export class OrderComponent implements OnInit {
     {label: 'Cartão de Débito', value: 'DEB'},
     {label: 'Vale Refeição', value: 'REF'}
   ];
-
-  delivery: number = 8;
 
   ngOnInit() {
     this.orderForm = this.formbuilder.group({
@@ -70,16 +70,23 @@ export class OrderComponent implements OnInit {
     this.orderService.removeItem(item);
   }
 
+  isOrderCompleted(): boolean{
+    return this.orderId !== undefined
+  }
+
   checkOrder(order: Order){
     order.orderItems = this.cartItems()
       .map((items:CartItem) => new OrderItem(items.quantity, items.menuItem.id)); //Pegando  cada item e transformando de CartItem para OrderItem
+
     this.orderService.checkOrder(order)
+    .do((orderID: string) => {
+      this.orderId = orderID
+    })
       .subscribe((orderId: string) => {
         this.router.navigate(['/order-summary'])
         console.log(`Compra concluída: ${orderId}`)
         this.orderService.clear()
       })
-    console.log(order);
   }
 
 }

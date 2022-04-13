@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
       email: this.formbuilder.control('', [Validators.required, Validators.email]),
       password: this.formbuilder.control('', [Validators.required])
     })
-    this.navigateTo = this.actvatedRoute.snapshot.params['to'] || '/'
+    this.navigateTo = this.actvatedRoute.snapshot.params['to'] || btoa('/')
   }
 
   login(){
@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
                             .subscribe(user => this.notificationService.notify(`Bem vindo(a) ${user.name}`),
                                        response => this.notificationService.notify(response.error.message),
                                        () => {
-                                         this.router.navigate([this.navigateTo])
+                                         this.router.navigate([ atob(this.navigateTo)])
                                        })
   }
 

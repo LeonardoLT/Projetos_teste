@@ -457,6 +457,22 @@
         }
       ],
       "id": 5
+    },
+    {
+      "name": "Amanda",
+      "email": "amanda@gmail.com",
+      "emailConfirmation": "amanda@gmail.com",
+      "address": "Rua da Modelo",
+      "number": "548",
+      "optionalAddress": "Apt 400",
+      "paymentOption": "REF",
+      "orderItems": [
+        {
+          "quantity": 1,
+          "menuId": "greensandwich"
+        }
+      ],
+      "id": 6
     }
   ]
 }
