@@ -4,6 +4,9 @@ Criar repositório:
 Clonar o repositorio para o coputador:
  - code > aba https > copiar o link > ir na pasta no seu computador e abrir o gitBash > comando git clone <link>
 
+Ao clonar um repositório vazio, deve-se iniciá-lo com:
+git init
+
 Verificar se o servidor e seu pc estão sincronizados:
  - git status
 
